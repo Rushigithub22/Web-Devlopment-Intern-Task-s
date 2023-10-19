@@ -1,0 +1,131 @@
+_HTML_
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="count.css">
+    <title>Countdown Timer</title>
+</head>
+<body>
+    <div class="timer-container">
+        <h1>Countdown Timer</h1>
+        <div class="timer">
+            <div class="display">
+                <span id="minutes">00</span>:<span id="seconds">00</span>
+            </div>
+            <div class="buttons">
+                <button id="start">Start</button>
+                <button id="stop">Stop</button>
+                <button id="reset">Reset</button>
+            </div>
+        </div>
+    </div>
+    <script src="count.js"></script>
+</body>
+</html>
+
+_CSS_
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.timer-container {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: white;
+}
+
+.buttons button:hover {
+    background-color: #0056b3;
+}
+
+_JS_
+let timer;
+let minutes = 10;
+let seconds = 0;
+
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const resetButton = document.getElementById('reset');
+const minutesDisplay = document.getElementById('minutes');
+const secondsDisplay = document.getElementById('seconds');
+
+function updateDisplay() {
+    minutesDisplay.textContent = minutes.toString().padStart(2, '0');
+    secondsDisplay.textContent = seconds.toString().padStart(2, '0');
+}
+
+function startTimer() {
+    timer = setInterval(function () {
+        if (minutes === 0 && seconds === 0) {
+            clearInterval(timer);
+            alert('Timer expired!');
+        } else {
+            if (seconds === 0) {
+                minutes--;
+                seconds = 59;
+            } else {
+                seconds--;
+            }
+            updateDisplay();
+        }
+    }, 1000);
+
+    startButton.disabled = true;
+    stopButton.disabled = false;
+    resetButton.disabled = true;
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    startButton.disabled = false;
+    stopButton.disabled = true;
+    resetButton.disabled = false;
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    minutes = 10;
+    seconds = 0;
+    updateDisplay();
+    startButton.disabled = false;
+    stopButton.disabled = true;
+    resetButton.disabled = true;
+}
+
+startButton.addEventListener('click', startTimer);
+stopButton.addEventListener('click', stopTimer);
+resetButton.addEventListener('click', resetTimer);
+
+updateDisplay();
