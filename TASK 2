@@ -1,0 +1,124 @@
+_HTML_
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="log.css">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-message" class="error-message"></p>
+    </div>
+    <script src="log.js"></script>
+</body>
+</html>
+
+
+_CSS_
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+_JS_
+
+const loginForm = document.getElementById('login-form');
+const errorMessage = document.getElementById('error-message');
+
+loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const username = loginForm.username.value;
+    const password = loginForm.password.value;
+
+    // Check if the username and password meet your validation criteria
+    if (validateInput(username, password)) {
+        // Hash the password (for demonstration purposes, you can use a more secure hashing library)
+        const hashedPassword = hashPassword(password);
+
+        // Here, you can send the username and hashedPassword to a server for authentication
+        // For this example, we'll just display a success message
+        alert('Login successful!');
+    } else {
+        errorMessage.textContent = 'Invalid username or password.';
+    }
+});
+
+function validateInput(username, password) {
+    // Add your input validation logic here
+    // For example, check if the username and password meet certain criteria
+    return true; // Return true if validation is successful, false otherwise
+}
+
+function hashPassword(password) {
+    // For demonstration purposes, we'll use a simple hash function
+    // In practice, you should use a secure password hashing library like bcrypt
+    const hashedPassword = btoa(password);
+    return hashedPassword;
+}
